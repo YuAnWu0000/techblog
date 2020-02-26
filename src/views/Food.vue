@@ -27,29 +27,71 @@
         <a href="https://www.ele.me" target="_blank">订单管理</a>
       </el-menu-item>
     </el-menu>
-    <div class="page">
-      <!-- 評分卡片 -->
-      <el-card shadow="hover" class="rate-card">
-        <el-row type="flex" :gutter="20">
-          <el-col :span="12">
-            <img src="@/assets/images/food/wutenglamian/miso.jpg" class="rate-image">
-          </el-col>
-          <el-col :span="12">
-            <div v-for="item in rate" :key="item.title">
-              <el-row class="rate-title">{{item.title}}:
-                <el-rate
-                  v-model="item.value"
-                  disabled show-score
-                  text-color="#ff9900"
-                  class="rate-value">
-                </el-rate>
-              </el-row>
-              <el-row class="rate-content">{{item.content}}</el-row>
-            </div>
-          </el-col>
-        </el-row>
-      </el-card>
-    </div>
+    <el-row class="page">
+        <el-col :span="8">
+          <!-- 側邊欄 -->
+          <el-menu
+            default-active="2"
+            :collapse="false"
+            :default-openeds="[1-4-1]"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#ffd04b">
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>拉麵</span>
+              </template>
+              <el-menu-item-group>
+                <template slot="title">醬油</template>
+                <el-menu-item index="1-1">选项1</el-menu-item>
+                <el-menu-item index="1-2">选项2</el-menu-item>
+              </el-menu-item-group>
+              <el-menu-item-group title="分组2">
+                <el-menu-item index="1-3">豚骨</el-menu-item>
+              </el-menu-item-group>
+              <el-submenu index="1-4">
+                <template slot="title">雞白湯</template>
+                <el-menu-item index="1-4-1">选项1</el-menu-item>
+              </el-submenu>
+            </el-submenu>
+            <el-menu-item index="2">
+              <i class="el-icon-menu"></i>
+              <span slot="title">生魚片</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+              <i class="el-icon-setting"></i>
+              <span slot="title">其他</span>
+            </el-menu-item>
+          </el-menu>
+        </el-col>
+        <el-col :span="16">
+          <!-- 評分卡片 -->
+          <el-card shadow="hover" class="rate-card">
+            <el-row type="flex" :gutter="20">
+              <el-col :span="12">
+                <img src="@/assets/images/food/wutenglamian/miso.jpg" class="rate-image">
+              </el-col>
+              <el-col :span="12">
+                <div v-for="item in rate" :key="item.title">
+                  <el-row class="rate-title">{{item.title}}:
+                    <el-rate
+                      v-model="item.value"
+                      disabled show-score
+                      text-color="#ff9900"
+                      class="rate-value">
+                    </el-rate>
+                  </el-row>
+                  <el-row class="rate-content">{{item.content}}</el-row>
+                </div>
+              </el-col>
+            </el-row>
+          </el-card>
+        </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -127,9 +169,9 @@ export default {
     .page {
       display: flex;
       justify-content: center;
+      max-width: 1440px;
     }
     .rate-card {
-      max-width: 1440px;
     }
   }
 </style>

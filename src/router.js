@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Food from './views/Food.vue';
+import Tech from './views/Tech.vue';
 
 Vue.use(Router);
 
@@ -18,6 +19,11 @@ export default new Router({
       path: '/food',
       name: 'food',
       component: Food,
+    },
+    {
+      path: '/tech',
+      name: 'tech',
+      component: Tech,
     },
     {
       path: '/about',
