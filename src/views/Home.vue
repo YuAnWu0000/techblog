@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     goToGithub() {
-      window.open('https://github.com/YuAnWu0000');
+      window.open('https://github.com/YuAnWu0000/techblog');
     },
     handleCarousel(index) {
       this.carouselTitle = this.carousel[index].title;
