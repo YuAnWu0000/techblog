@@ -18,44 +18,42 @@
         於是叫上我幫忙通靈，身為通靈菜鳥的我，盯著他如下的程式碼：
       </div>
       <div class="p">
-        <pre class="line-numbers">
-          <code class="language-javascript">var basket = [
-            {
-              name: 'apple',
-              number: 1
-            },
-            {
-              name: 'banana',
-              number: 2
-            },
-            {
-              name: 'mango',
-              number: 3
-            }
-          ];
+        <prism language="javascript" class="line-numbers">var basket = [
+  {
+    name: 'apple',
+    number: 1
+  },
+  {
+    name: 'banana',
+    number: 2
+  },
+  {
+    name: 'mango',
+    number: 3
+  }
+];
 
-          async function buyEachOne() { // 希望拿到每種水果+1的結果
-            basket.forEach(async (item) => {
-              const newNumber = await shopping(item.number);
-              item.number = newNumber;
-            });
-            /* for (let item of basket) {
-              const newNumber = await shopping(item.number);
-              item.number = newNumber;
-            } */
-            console.log(basket);
-          }
+async function buyEachOne() { // 希望拿到每種水果+1的結果
+  basket.forEach(async (item) => {
+    const newNumber = await shopping(item.number);
+    item.number = newNumber;
+  });
+  /* for (let item of basket) {
+    const newNumber = await shopping(item.number);
+    item.number = newNumber;
+  } */
+  console.log(basket);
+}
 
-          function shopping(number) {
-            return new Promise((resolve, reject) => {
-              setTimeout(function() {
-                resolve(number + 1);
-              }, 2000);
-            });
-          }
+function shopping(number) {
+  return new Promise((resolve, reject) => {
+    setTimeout(function() {
+      resolve(number + 1);
+    }, 2000);
+  });
+}
 
-          buyEachOne();</code>
-        </pre>
+buyEachOne();</prism>
       </div>
       <div class="p">
         我將概念梳理了一下，流程簡化為菜籃中有若干種水果，我想為每樣水果都多添購一顆，
@@ -128,7 +126,7 @@
       </div>
       <div class="p">
         <pre class="line-numbers">
-          <code class="language-javascript">async function buyEachOne() { // 希望拿到每種水果+1的結果
+          <code ref="code" class="language-javascript">async function buyEachOne() { // 希望拿到每種水果+1的結果
             basket.forEach(async (item) => {
               const newNumber = await shopping(item.number);
               item.number = newNumber;
@@ -179,8 +177,23 @@
 </div>
 </template>
 <script>
+import Prism from 'prismjs';
+// import 'prismjs/themes/prism-tomorrow.css';
+// import 'prismjs/components/prism-scss.min';
+// import 'prismjs/plugins/autolinker/prism-autolinker.min';
+// import 'prismjs/plugins/autolinker/prism-autolinker.css';
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
+import 'prismjs/plugins/line-numbers/prism-line-numbers.min.js';
 export default {
-
+  data() {
+    return {
+      code: '',
+    }
+  },
+  mounted() {
+    console.log(Prism);
+    // this.$refs.code.innerHTML = Prism.highlight(this.$refs.code.innerHTML, Prism.languages.javascript, 'javascript');
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -190,7 +203,7 @@ export default {
   $code-font-size: 18px;
   // 改寫prism code snippet的style
   pre[class*="language-"] {
-    padding: 0 !important;
+    // padding: 0 !important;
     font-size: $code-font-size;
   }
   .flex {
