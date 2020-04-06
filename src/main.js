@@ -8,17 +8,10 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import './assets/css/NotoSansTC.css';
 import './assets/css/Roboto.css';
 
-// prismjs code snippet hignlight library
-import 'prismjs';
-import 'prismjs/themes/prism-tomorrow.css';
-import 'prismjs/components/prism-scss.min';
-import 'prismjs/plugins/autolinker/prism-autolinker.min';
-import 'prismjs/plugins/autolinker/prism-autolinker.css';
-import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
-import 'prismjs/plugins/line-numbers/prism-line-numbers.min.js';
-import Prism from 'vue-prism-component';
-
-Vue.component('prism', Prism);
+// prismjs is a code snippet hignlight library
+// 在SPA架構下使用prismjs需要自定義component在需要時呼叫highlight function, 不然每次都得重新整理才有效果
+import MyPrism from './components/MyPrism.vue';
+Vue.component('MyPrism', MyPrism);
 
 Vue.use(ElementUI);
 

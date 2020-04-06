@@ -3,7 +3,7 @@
   <div class="article">
     <div class="title">
       <div>
-        Async/Await 到底是不是戰犯
+        Async/Await與forEach的愛恨情仇
       </div>
       <div class="mt-20">
         <img src="@/assets/images/tech/forEachAsync/title.jpg" style="width: 50%;">
@@ -17,44 +17,45 @@
         前幾天公司同事R遇到了forEach與async/await這對好基友的基情碰撞，卡關了許久仍不明所以，
         於是叫上我幫忙通靈，身為通靈菜鳥的我，盯著他如下的程式碼：
       </div>
-      <div class="p">
-        <prism language="javascript" class="line-numbers">var basket = [
-  {
-    name: 'apple',
-    number: 1
-  },
-  {
-    name: 'banana',
-    number: 2
-  },
-  {
-    name: 'mango',
-    number: 3
-  }
-];
+      <myPrism class="p">
+        <pre class="line-numbers">
+          <code class="language-javascript">{
+              name: 'apple',
+              number: 1
+            },
+            {
+              name: 'banana',
+              number: 2
+            },
+            {
+              name: 'mango',
+              number: 3
+            }
+          ];
 
-async function buyEachOne() { // 希望拿到每種水果+1的結果
-  basket.forEach(async (item) => {
-    const newNumber = await shopping(item.number);
-    item.number = newNumber;
-  });
-  /* for (let item of basket) {
-    const newNumber = await shopping(item.number);
-    item.number = newNumber;
-  } */
-  console.log(basket);
-}
+          async function buyEachOne() { // 希望拿到每種水果+1的結果
+            basket.forEach(async (item) => {
+              const newNumber = await shopping(item.number);
+              item.number = newNumber;
+            });
+            /* for (let item of basket) {
+              const newNumber = await shopping(item.number);
+              item.number = newNumber;
+            } */
+            console.log(basket);
+          }
 
-function shopping(number) {
-  return new Promise((resolve, reject) => {
-    setTimeout(function() {
-      resolve(number + 1);
-    }, 2000);
-  });
-}
+          function shopping(number) {
+            return new Promise((resolve, reject) => {
+              setTimeout(function() {
+                resolve(number + 1);
+              }, 2000);
+            });
+          }
 
-buyEachOne();</prism>
-      </div>
+          buyEachOne();</code>
+        </pre>
+      </myPrism>
       <div class="p">
         我將概念梳理了一下，流程簡化為菜籃中有若干種水果，我想為每樣水果都多添購一顆，
         每次購買須花費兩秒的時間，購買完成後將菜籃中所有水果的新數量打印出來。
@@ -124,9 +125,9 @@ buyEachOne();</prism>
       <div class="p-title">
         當你可以完全預測上面這個影片的走向時，我相信你應該就可以繼續閱讀以下的文章了。
       </div>
-      <div class="p">
+      <myPrism class="p">
         <pre class="line-numbers">
-          <code ref="code" class="language-javascript">async function buyEachOne() { // 希望拿到每種水果+1的結果
+          <code class="language-javascript">async function buyEachOne() { // 希望拿到每種水果+1的結果
             basket.forEach(async (item) => {
               const newNumber = await shopping(item.number);
               item.number = newNumber;
@@ -138,20 +139,20 @@ buyEachOne();</prism>
             console.log(basket);
           }</code>
         </pre>
-      </div>
+      </myPrism>
       <div class="p">
         我們可以觀察buyEachOne這個function，程式先用forEach對basket進行遍歷，而forEach的運作機制需要傳入一個callback，
         在forEach進入stack被執行時，JS interpreter判斷傳入的callback為非同步程式(Async/Await)，
         因此依序將三個callback塞入Event Queue(Task Queue)當中，以這個範例來說，就是把
       </div>
-      <div class="p">
+      <myPrism class="p">
         <pre class="line-numbers">
           <code class="language-javascript">async (item) => {
             const newNumber = await shopping(item.number);
             item.number = newNumber;
           }</code>
         </pre>
-      </div>
+      </myPrism>
       <div class="p">
         這個function塞三個進Event Queue，一段時間後由Event Loop去做輪詢。有了這個觀念之後，
         接著我們看console的位置就可以知道他會在forEach的三個callback塞入Event Queue之後進入stack被立即執行(因為他是同步的程式碼)，
@@ -176,34 +177,25 @@ buyEachOne();</prism>
   </div> 
 </div>
 </template>
+
 <script>
-import Prism from 'prismjs';
-// import 'prismjs/themes/prism-tomorrow.css';
-// import 'prismjs/components/prism-scss.min';
-// import 'prismjs/plugins/autolinker/prism-autolinker.min';
-// import 'prismjs/plugins/autolinker/prism-autolinker.css';
-import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
-import 'prismjs/plugins/line-numbers/prism-line-numbers.min.js';
 export default {
   data() {
     return {
-      code: '',
     }
   },
   mounted() {
-    console.log(Prism);
-    // this.$refs.code.innerHTML = Prism.highlight(this.$refs.code.innerHTML, Prism.languages.javascript, 'javascript');
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
   $title-font-size: 40px;
   $p-title-font-size: 25px;
   $p-font-size: 22px;
-  $code-font-size: 18px;
+  $code-font-size: 16px;
   // 改寫prism code snippet的style
   pre[class*="language-"] {
-    // padding: 0 !important;
+    padding: 0 !important;
     font-size: $code-font-size;
   }
   .flex {
