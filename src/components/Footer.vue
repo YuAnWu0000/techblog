@@ -40,5 +40,6 @@ export default {
     padding: 20px;
     color: #ffffff;
     text-align: center;
+    margin-top: 10px;
   }
 </style>

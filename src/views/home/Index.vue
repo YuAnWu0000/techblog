@@ -27,19 +27,19 @@ export default {
       carousel: [
         {
           // eslint-disable-next-line
-          src: require('../assets/images/home/hacker.png'),
+          src: require('@/assets/images/home/hacker.png'),
           href: 'tech',
           title: '技術分享',
         },
         {
           // eslint-disable-next-line
-          src: require('../assets/images/home/food.png'),
+          src: require('@/assets/images/home/food.png'),
           href: 'food',
           title: '美食食記',
         },
         {
           // eslint-disable-next-line
-          src: require('../assets/images/home/life.png'),
+          src: require('@/assets/images/home/life.png'),
           href: 'life',
           title: '生活雜記',
         },
