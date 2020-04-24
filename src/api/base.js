@@ -10,7 +10,7 @@ export const request = (options) => {
   return new Promise((resolve, reject) => {
     instance(options)
       .then(function (res) {
-        resolve(res.data);
+        resolve(res.data.data);
       })
       .catch(function (err) {
         console.log(err.response);

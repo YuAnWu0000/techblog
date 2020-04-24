@@ -5,7 +5,7 @@
       <el-col :span="24">
         <div>最新文章</div>
         <div style="display: flex; flex-direction: column; flex-wrap: wrap; justify-content: center; max-height: 400px;">
-          <div v-for="article in articles" :key="article" style="width: 400px;">
+          <div v-for="article in articles" :key="article.number" style="width: 400px;">
             <!-- 大圖文章 -->
             <div v-if="article.number===1">
               <div class="new-big-img"></div>
@@ -36,21 +36,24 @@
       </el-col>
       <!-- 拉麵評價板塊 -->
       <el-col :span="12">
-        <el-row v-for="ramen in ramens" :key="ramen" style="display:flex; margin-bottom: 10px;">
-          <el-col :span="6" class="else-img"></el-col>
+        <el-row v-for="ramen in ramens" :key="ramen.id" style="display:flex; margin-bottom: 10px;">
+          <el-col :span="6" class="ramen-img" :style="{ backgroundImage: 'url('+ ramen.imgSrc1 +')' }"></el-col>
           <el-col :span="18">
             <el-rate
-              v-model="ramen.rate"
+              v-model="ramen.overallRate"
               disabled show-score
               text-color="#ff9900"
               class="rate-value">
             </el-rate>
+            <div style="font-weight: 500;">{{ramen.restaurant}}</div>
+            <div>{{ramen.name}}</div>
+            <div>{{ramen.overallFeedback}}</div>
           </el-col>
         </el-row>
       </el-col>
       <!-- 其他食記板塊 -->
       <el-col :span="12">
-        <el-row v-for="article in articles" :key="article" style="display:flex; margin-bottom: 10px;">
+        <el-row v-for="article in articles" :key="article.number" style="display:flex; margin-bottom: 10px;">
           <el-col :span="18">
             <div class="article-title">{{article.title}}</div>
             <div>{{article.author}}</div>
@@ -64,6 +67,8 @@
 </template>
 
 <script>
+import { getRamenRate } from '@/api/ramen';
+
 export default {
   data() {
     return {
@@ -99,25 +104,32 @@ export default {
           number: 5
         }
       ],
-      ramens: [
-        {
-          rate: 4.2
-        },
-        {
-          rate: 4.5
-        },
-        {
-          rate: 4.7
-        },
-        {
-          rate: 3.1
-        },
-        {
-          rate: 3.8
-        },
-      ]
+      ramens: [],
     };
-  }
+  },
+  async created() {
+    const result = await getRamenRate();
+    for (let item of result) {
+      try {
+        item.imgSrc1 = require('@/assets/images/food/' + item.imgSrc1);
+        // item.imgSrc2 = require('@/assets/images/food/' + item.imgSrc2);
+        // item.imgSrc3 = require('@/assets/images/food/' + item.imgSrc3);
+        // item.imgSrc4 = require('@/assets/images/food/' + item.imgSrc4);
+        // item.imgSrc5 = require('@/assets/images/food/' + item.imgSrc5);
+        this.ramens.push(item);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    // this.ramens = result.map(item => {
+    //   item.imgSrc1 = require('@/assets/images/' + item.imgSrc1);
+    //   item.imgSrc2 = require('@/assets/images/' + item.imgSrc2);
+    //   item.imgSrc3 = require('@/assets/images/' + item.imgSrc3);
+    //   item.imgSrc4 = require('@/assets/images/' + item.imgSrc4);
+    //   item.imgSrc5 = require('@/assets/images/' + item.imgSrc5);
+    //   return item;
+    // });
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -161,7 +173,17 @@ export default {
     -webkit-box-orient: vertical;
     display: -webkit-box;
   }
-  .else-img{
+  .ramen-img {
+    background-image: url("../../assets/images/tech/forEachAsync/title.jpg"); /* The image used */
+    background-color: #cccccc; /* Used if the image is unavailable */
+    width: 150px;
+    min-width: 150px;
+    height: 150px; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+  }
+  .else-img {
     background-image: url("../../assets/images/tech/forEachAsync/title.jpg"); /* The image used */
     background-color: #cccccc; /* Used if the image is unavailable */
     width: 150px;

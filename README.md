@@ -68,3 +68,10 @@ Reason: console.log打印err的結果為string，看不到其中包含的respons
 Solution: console.log(err.response)便可以得到後端傳回的完整Http Exception object了。
 ```
 References: [https://github.com/axios/axios/issues/960](https://github.com/axios/axios/issues/960)
+
+### Issue#6: v-bind:style="{ backgroundImage: 'url(ramen.imageSrc1)' }"無法正確解析imagSrc變數。
+```
+Reason: ramen.imageSrc1被當成字串處理而不是變數。
+Solution: :style="{ backgroundImage: 'url('+ ramen.imgSrc1 +')' }"。
+```
+References: [https://stackoverflow.com/questions/35242272/vue-js-data-bind-style-backgroundimage-not-working](https://stackoverflow.com/questions/35242272/vue-js-data-bind-style-backgroundimage-not-working)
