@@ -3,7 +3,7 @@
   <el-card shadow="hover" class="rate-card">
     <el-row type="flex" :gutter="20">
       <el-col :span="12">
-        <img src="@/assets/images/food/wutenglamian/miso.jpg" class="rate-image">
+        <img src="@/assets/images/food/wutengramen/miso.jpg" class="rate-image">
       </el-col>
       <el-col :span="12">
         <div v-for="item in rate" :key="item.title">

@@ -36,11 +36,11 @@
       </el-col>
       <!-- 拉麵評價板塊 -->
       <el-col :span="12">
-        <el-row v-for="lamian in lamians" :key="lamian" style="display:flex; margin-bottom: 10px;">
+        <el-row v-for="ramen in ramens" :key="ramen" style="display:flex; margin-bottom: 10px;">
           <el-col :span="6" class="else-img"></el-col>
           <el-col :span="18">
             <el-rate
-              v-model="lamian.rate"
+              v-model="ramen.rate"
               disabled show-score
               text-color="#ff9900"
               class="rate-value">
@@ -99,7 +99,7 @@ export default {
           number: 5
         }
       ],
-      lamians: [
+      ramens: [
         {
           rate: 4.2
         },

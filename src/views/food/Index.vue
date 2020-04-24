@@ -50,14 +50,14 @@
 
 <script>
 import RateCard from './components/RateCard.vue';
-import { getLamianRate } from '@/api/lamian';
+import { getRamenRate } from '@/api/ramen';
 
 export default {
   components: {
     RateCard,
   },
   async mounted() {
-    const result = await getLamianRate();
+    const result = await getRamenRate();
     console.log(result);
   },
 };

@@ -1,9 +1,9 @@
 import { request } from './base';
 
-export const getLamianRate = () => {
+export const getRamenRate = () => {
   return request({
     method: "get",
-    url: "/lamian",
+    url: "/ramen",
     params: {},
   });
 }
