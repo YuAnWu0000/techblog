@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-row class="page">
-      <el-col :span="8">
-        <!-- 側邊欄 -->
+      <!-- 側邊欄 -->
+      <!-- <el-col :span="8">
         <el-menu
           default-active="2"
           :collapse="false"
@@ -40,9 +40,11 @@
             <span slot="title">其他</span>
           </el-menu-item>
         </el-menu>
-      </el-col>
-      <el-col :span="16">
-        <RateCard></RateCard>
+      </el-col> -->
+      <el-col :span="24">
+        <RateCard :ramenId="ramenId"></RateCard>
+        <div @click="toPrevRamen">prev</div>
+        <div @click="toNextRamen">next</div>
       </el-col>
     </el-row>
   </div>
@@ -56,10 +58,23 @@ export default {
   components: {
     RateCard,
   },
+  data() {
+    return {
+      ramenId: 1,
+    };
+  },
   async mounted() {
     const result = await getRamenRate();
     console.log(result);
   },
+  methods: {
+    toPrevRamen() {
+      this.ramenId--;
+    },
+    toNextRamen() {
+      this.ramenId++;
+    },
+  }
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
