@@ -52,7 +52,6 @@
 
 <script>
 import RateCard from './components/RateCard.vue';
-import { getRamenRate } from '@/api/ramen';
 
 export default {
   components: {
@@ -64,8 +63,6 @@ export default {
     };
   },
   async mounted() {
-    const result = await getRamenRate();
-    console.log(result);
   },
   methods: {
     toPrevRamen() {

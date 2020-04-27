@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { getRamenRate } from '@/api/ramen';
+import { getAllRamenRates } from '@/api/ramenRate';
 
 export default {
   data() {
@@ -108,7 +108,7 @@ export default {
     };
   },
   async created() {
-    const result = await getRamenRate();
+    const result = await getAllRamenRates();
     for (let item of result) {
       try {
         item.imgSrc1 = require('@/assets/images/food/' + item.imgSrc1);

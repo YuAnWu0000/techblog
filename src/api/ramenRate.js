@@ -1,17 +1,17 @@
 import { request } from './base';
 
-export const getRamenRate = () => {
+export const getAllRamenRates = () => {
   return request({
     method: 'get',
-    url: '/ramen/all',
+    url: '/ramenRate/all',
     params: {},
   });
 }
 
-export const getRamenById = (id) => {
+export const getRamenRateById = (id) => {
   return request({
     method: 'get',
-    url: `/ramen/${id}`,
+    url: `/ramenRate/${id}`,
     params: {},
   });
 }

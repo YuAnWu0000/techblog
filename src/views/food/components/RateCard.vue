@@ -121,7 +121,7 @@
   </el-card>
 </template>
 <script>
-import { getRamenById } from '@/api/ramen';
+import { getRamenRateById } from '@/api/ramenRate';
 
 export default {
   props: ['ramenId'],
@@ -131,7 +131,7 @@ export default {
     };
   },
   async created() {
-    this.ramen = await getRamenById(this.ramenId);
+    this.ramen = await getRamenRateById(this.ramenId);
     this.ramen.imgSrc1 = require('@/assets/images/food/' + this.ramen.imgSrc1);
     this.ramen.imgSrc2 = require('@/assets/images/food/' + this.ramen.imgSrc2);
     this.ramen.imgSrc3 = require('@/assets/images/food/' + this.ramen.imgSrc3);
@@ -141,7 +141,7 @@ export default {
   },
   watch: {
     ramenId: async function() {
-      this.ramen = await getRamenById(this.ramenId);
+      this.ramen = await getRamenRateById(this.ramenId);
       this.ramen.imgSrc1 = require('@/assets/images/food/' + this.ramen.imgSrc1);
       this.ramen.imgSrc2 = require('@/assets/images/food/' + this.ramen.imgSrc2);
       this.ramen.imgSrc3 = require('@/assets/images/food/' + this.ramen.imgSrc3);
