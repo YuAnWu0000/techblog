@@ -43,8 +43,16 @@
       </el-col> -->
       <el-col :span="24">
         <RateCard :ramenId="ramenId"></RateCard>
-        <div @click="toPrevRamen">prev</div>
-        <div @click="toNextRamen">next</div>
+        <div class="pagination">
+          <div ref="prev" @click="toPrevRamen" class="to-prev-or-next">
+            <i class="fas fa-arrow-left"></i>
+            prev
+          </div>
+          <div ref="next" @click="toNextRamen" class="to-prev-or-next">
+            next
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -63,19 +71,58 @@ export default {
     };
   },
   async mounted() {
+    if (this.ramenId <= 1) {
+      console.log(this.$refs.prev);
+      this.$refs.prev.classList.add("disable");
+    }
+    if (this.ramenId >= 8) {
+      this.$refs.next.classList.add("disable");
+    }
   },
   methods: {
     toPrevRamen() {
-      this.ramenId--;
+      console.log(this.ramenId);
+      if (this.ramenId > 1) {
+        this.ramenId--;
+      }
     },
     toNextRamen() {
-      this.ramenId++;
+      console.log(this.ramenId);
+      if (this.ramenId < 8) {
+        this.ramenId++;
+      }
     },
+  },
+  watch: {
+    ramenId: function() {
+      if (this.ramenId <= 1) {
+        this.$refs.prev.classList.add("disable");
+      } else if (this.ramenId >= 8) {
+        this.$refs.next.classList.add("disable");
+      } else {
+        this.$refs.prev.classList.remove("disable");
+        this.$refs.next.classList.remove("disable");
+      }
+    }
   }
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+  }
+  .to-prev-or-next {
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .disable {
+    font-weight: 300;
+    color: gray;
+    cursor: not-allowed;
+  }
   @media (min-width: 1500px) {
     .page {
       display: flex;

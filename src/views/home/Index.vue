@@ -28,7 +28,7 @@ export default {
         {
           // eslint-disable-next-line
           src: require('@/assets/images/home/hacker.png'),
-          href: 'tech',
+          href: 'tech/forEachAsync',
           title: '技術分享',
         },
         {

@@ -1,13 +1,17 @@
 <template>
   <!-- 評分卡片 -->
   <el-card shadow="hover" class="rate-card">
-    <el-row type="flex" :gutter="20">
-      <el-col :span="12">
-        <img :src="ramen.imgSrc1" class="rate-image">
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="20" :md="12" :lg="12" :xl="12">
+        <el-carousel :interval="50000"  height="700px">
+          <el-carousel-item v-for="(ramenImg, index) in ramenImgs" :key="index">
+            <div class="rate-img" :style="{ backgroundImage: 'url('+ ramenImg +')' }"></div>
+          </el-carousel-item>
+        </el-carousel>
       </el-col>
-      <el-col :span="12">
-        <div>店家：{{ramen.restaurant}}</div>
-        <div>品名：{{ramen.name}}</div>
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+        <div class="rate-title">店家：{{ramen.restaurant}}</div>
+        <div class="rate-title" style="margin-bottom: 10px;">品名：{{ramen.name}}</div>
         <!-- 湯 -->
         <div v-if="ramen.soupRate">
           <el-row class="rate-title">湯:
@@ -128,35 +132,40 @@ export default {
   data() {
     return {
       ramen: {},
+      ramenImgs: [],
     };
   },
-  async created() {
-    this.ramen = await getRamenRateById(this.ramenId);
-    this.ramen.imgSrc1 = require('@/assets/images/food/' + this.ramen.imgSrc1);
-    this.ramen.imgSrc2 = require('@/assets/images/food/' + this.ramen.imgSrc2);
-    this.ramen.imgSrc3 = require('@/assets/images/food/' + this.ramen.imgSrc3);
-    this.ramen.imgSrc4 = require('@/assets/images/food/' + this.ramen.imgSrc4);
-    this.ramen.imgSrc5 = require('@/assets/images/food/' + this.ramen.imgSrc5);
-    console.log(this.ramen);
+  created() {
+    this.setRamenRateAndImg();
+  },
+  methods: {
+    async setRamenRateAndImg() {
+      this.ramen = await getRamenRateById(this.ramenId);
+      if(this.ramen.imgSrc1) this.ramenImgs.push(require('@/assets/images/food/' + this.ramen.imgSrc1));
+      if(this.ramen.imgSrc2) this.ramenImgs.push(require('@/assets/images/food/' + this.ramen.imgSrc2));
+      if(this.ramen.imgSrc3) this.ramenImgs.push(require('@/assets/images/food/' + this.ramen.imgSrc3));
+      if(this.ramen.imgSrc4) this.ramenImgs.push(require('@/assets/images/food/' + this.ramen.imgSrc4));
+      if(this.ramen.imgSrc5) this.ramenImgs.push(require('@/assets/images/food/' + this.ramen.imgSrc5));
+      console.log(this.ramenImgs);
+    },
   },
   watch: {
-    ramenId: async function() {
-      this.ramen = await getRamenRateById(this.ramenId);
-      this.ramen.imgSrc1 = require('@/assets/images/food/' + this.ramen.imgSrc1);
-      this.ramen.imgSrc2 = require('@/assets/images/food/' + this.ramen.imgSrc2);
-      this.ramen.imgSrc3 = require('@/assets/images/food/' + this.ramen.imgSrc3);
-      this.ramen.imgSrc4 = require('@/assets/images/food/' + this.ramen.imgSrc4);
-      this.ramen.imgSrc5 = require('@/assets/images/food/' + this.ramen.imgSrc5);
+    ramenId: function() {
+      this.ramenImgs = [];
+      this.setRamenRateAndImg();
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-  .rate-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
+  .rate-img {
+    background-color: #cccccc; /* Used if the image is unavailable */
+    min-width: 500px;
+    max-width: 700px;
+    height: 700px; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
   }
   .rate-title {
     display: flex;

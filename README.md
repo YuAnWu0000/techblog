@@ -75,3 +75,10 @@ Reason: ramen.imageSrc1被當成字串處理而不是變數。
 Solution: :style="{ backgroundImage: 'url('+ ramen.imgSrc1 +')' }"。
 ```
 References: [https://stackoverflow.com/questions/35242272/vue-js-data-bind-style-backgroundimage-not-working](https://stackoverflow.com/questions/35242272/vue-js-data-bind-style-backgroundimage-not-working)
+
+### Issue#7: 在<el-col></el-col>上註冊@click事件並不會觸發。
+```
+Reason: 子組件上的事件預設需要註冊在子組件的methods中。
+Solution: 1.使用@click.native。 2.在子組件的methods中新增一個emit方法以觸發父組件的@click事件。
+```
+References: [https://segmentfault.com/q/1010000011186651/a-1020000011187890](https://segmentfault.com/q/1010000011186651/a-1020000011187890)

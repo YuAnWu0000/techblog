@@ -14,12 +14,12 @@
         「ㄟ~Zachary~~你可以過來幫我通靈一下嗎？」
       </div>
       <div class="p">
-        前幾天公司同事R遇到了forEach與async/await這對好基友的基情碰撞，卡關了許久仍不明所以，
-        於是叫上我幫忙通靈，身為通靈菜鳥的我，盯著他如下的程式碼：
+        前幾天公司同事在forEach內使用async/await遇到了問題，卡關了許久仍不明所以，
+        於是叫上我幫忙通靈，身為通靈菜鳥的我，盯著他如下的程式碼：(簡化版本)
       </div>
       <myPrism class="p">
         <pre class="line-numbers">
-          <code class="language-javascript">{
+          <code class="language-javascript">const basket = {
               name: 'apple',
               number: 1
             },
@@ -64,7 +64,7 @@
         好的！回到問題...
       </div>
       <div class="p-title">
-        「到底為什麼console出來是下面這樣啊！」R一臉懊惱的抱著頭嘶吼
+        「到底為什麼console出來是下面這樣啊！」他一臉懊惱的抱著頭嘶吼
       </div>
       <div class="text-center mt-20">
         <img src="@/assets/images/tech/forEachAsync/1.jpg" style="width: 50%;">
@@ -76,8 +76,8 @@
         <img src="@/assets/images/tech/forEachAsync/2.jpg" style="width: 35%;">
         <div class="p">
           「你看！我要的值又長出來啦！是怎樣，為什麼這世界這麼複雜啊啊啊？」
-          見他已經開始歇斯底里，同樣也深感困惑的我開始在網路上找尋相關資料，
-          發現會造成這種現象其實可以歸咎於兩個原因，也就是說，造成R同事崩潰的犯人，有兩位！
+          見他開始抱著頭歇斯底里，同樣也深感困惑的我開始在網路上找尋相關資料，
+          發現會造成這種現象其實可以歸咎於兩個原因，也就是說，造成我同事崩潰的犯人，有兩位！
           <p style="font-size: 40px; font-weight: 400;">Chrome, Async/Await</p>
           就是你們(指
         </div>
@@ -88,9 +88,8 @@
       <div class="p">
         我們先說行小惡的兇手，Google Chrome！沒錯，就是你，不要以為把頭撇開我就抓不到你了(Chrome: 關我屁事)，
         事實上只要你把鼠標移到上圖的藍色icon，就會出現tooltip告訴你原因了："Value below was evaluated just now."
-        這是什麼意思呢？以chrome來說，展開後會出現的值是根據記憶體位置去讀取最新的數據來的，
-        簡單的說，展開前的數值是console當下的值，而展開後則是現在存放在記憶體中最新的值，
-        至於兩者有什麼不同？為什麼展開前的結果不是我們預想中的呢？這問題就牽涉到了我們今天的千古罪人，
+        這是什麼意思呢？以chrome來說，展開前的數值是console當下的值，而展開後則是現在存放在記憶體中最新的值，
+        至於兩者有什麼不同？為什麼console當下數值會還沒變更呢？這問題就牽涉到了我們今天的千古罪人，
         Async/Await了！(Async/Await: 你再繼續誣陷我兩兄弟，我就把你打到你媽都不認識你。)
       </div>
       <div class="p-title">
@@ -140,37 +139,115 @@
           }</code>
         </pre>
       </myPrism>
+      <myPrism class="p">
+        <pre class="line-numbers">
+          <code class="language-javascript">function shopping(number) {
+            return new Promise((resolve, reject) => {
+              setTimeout(function() {
+                resolve(number + 1);
+              }, 2000);
+            });
+          }</code>
+        </pre>
+      </myPrism>
+      <div class="p-title">
+        讓我們用上面影片的邏輯來重新檢視一下這個範例
+      </div>
       <div class="p">
-        我們可以觀察buyEachOne這個function，程式先用forEach對basket進行遍歷，而forEach的運作機制需要傳入一個callback，
-        在forEach進入stack被執行時，JS interpreter判斷傳入的callback為非同步程式(Async/Await)，
-        因此依序將三個callback塞入Event Queue(Task Queue)當中，以這個範例來說，就是把
+        我們首先觀察buyEachOne這個function，程式先用forEach對basket進行遍歷，依序執行傳入forEach的三個callback，
+        執行到shopping的時候發現遇到了setTimeOut，因此將setTimeOut交由Web APIs進行處理，接著由於await的效果，
+        暫時凍結內部執行環境，至此，第一個callback處理完畢。這樣的流程總共會重複三次。
+      </div>
+      <div class="p">
+        forEach的三個callback處理完以後，接著call stack執行了console這一行，因而才有了上面chrome打印的結果。
+        也就是說，這邊console執行時，那三個Async callback還沒有結束凍結，這也就解釋了為什麼圖一會有我們意想不到的結果出現。
+      </div>
+      <div class="p">
+        與此同時，剛剛被我們棄之不理的那三個setTimeOut也在Web APIs的幫助下等待了兩秒並將後續程式塞入工作佇列(task queue)當中了。
+      </div>
+      <div class="p">
+      </div>
+      <div class="p">
+        當stack中的事件執行完畢之後，Event Loop機制才會將工作佇列(task queue)中的事件逐一塞入stack中並執行，
+        直到這時候，那三個callback才結束凍結繼續運行，而水果的數量才真正地進行更新。
+      </div>
+      <div class="p-title">
+        還記得開頭的那張迷因嗎？
+      </div>
+      <div class="p">
+        我曾看過不少人說Async/Await在forEach中是不起作用的，但其實事實並不是這樣，以結果來說，Async/Await依舊保證了函式內部的執行順序，
+        以這個例子而言，就是等待了兩秒後才更新水果的數量，但他不能保證的是，函式外部call stack會先跳過他來執行其他程式。(Async/Await：說得不錯，今天就饒你一命)
+      </div>
+      <div class="p-title">
+        ㄟ等等，講了這麼多，所以你到底有沒有幫你同事解決問題啊？
+      </div>
+      <div class="p">
+        阿對了，差點忘記在一邊懷疑人生的同事了，不過眼尖的你可能已經發現了，
+        答案其實就在一開始程式註解的部分喔！
       </div>
       <myPrism class="p">
         <pre class="line-numbers">
-          <code class="language-javascript">async (item) => {
-            const newNumber = await shopping(item.number);
-            item.number = newNumber;
+          <code class="language-javascript">async function buyEachOne() { // 希望拿到每種水果+1的結果
+            /* basket.forEach(async (item) => {
+              const newNumber = await shopping(item.number);
+              item.number = newNumber;
+            }); */
+            for (let item of basket) {
+              const newNumber = await shopping(item.number);
+              item.number = newNumber;
+            }
+            console.log(basket);
           }</code>
         </pre>
       </myPrism>
       <div class="p">
-        這個function塞三個進Event Queue，一段時間後由Event Loop去做輪詢。有了這個觀念之後，
-        接著我們看console的位置就可以知道他會在forEach的三個callback塞入Event Queue之後進入stack被立即執行(因為他是同步的程式碼)，
-        也就是說，這邊console的執行時間是早於那三次shopping的，這也就解釋了為什麼圖一會有我們意想不到的結果出現。
+        只要把forEach改為for就會是你預想的結果了！
       </div>
-      <div class="p">
-        當stack中的事件執行完畢之後，Event Loop機制會將Event Queue中的事件逐一塞入stack中並執行，也就是逐一執行上圖的async callback，
-        那麼接著我們可以思考一下當async function進入stack後會發生什麼事，你可能猜想到了，執行到await的時後會回傳一個Promise，
-        恭喜，又是另一個非同步代碼，於是又進入Event Queue中等待Event Loop的下一次輪詢了。
-      </div>
-      <!-- <div class="p">
-        如果對Event Loop機制不理解的人，可以參照<a href="https://www.youtube.com/watch?v=YOo001UM8PI&feature=emb_logo">這個</a>影片
-      </div> -->
       <div class="text-center mt-20">
         <img src="@/assets/images/tech/forEachAsync/3.jpg" style="width: 60%;">
       </div>
-      <div class="text-center mt-20">
-        <img src="@/assets/images/tech/forEachAsync/4.jpg" style="width: 60%;">
+      <div class="p-title">
+        這真是神奇阿傑克！！
+      </div>
+      <div class="p">
+        其實懂了Event Loop的原理後，這樣的結果也沒什麼好驚訝的了。
+        Async/Await的作用是保證當前函式的執行順序，而forEach與for的最大區別就在於forEach是傳入callback來執行，因此對於Async/Await來說，
+        當前函式是那三個callback，也就是說，這邊它的作用是凍結那三個callback function。
+        但for...of就不同了，它內部的await會凍結最近的Async function，也就是凍結buyEachOne()的執行，因此才會有我們想要的結果出現。
+      </div>
+      <div class="p-title">
+        如果你認為你已經理解上面的範例，那就不妨試試下面這個吧!
+      </div>
+      <myPrism class="p">
+        <pre class="line-numbers">
+          <code class="language-javascript">const example = async () => {
+            const nums = [1,2,3];
+            nums.forEach(async num => {
+              console.log('start ', num);
+              const result = await returnNum(num);
+              console.log('end ', num);
+            });
+            console.log('after forEach');
+          }
+          
+          const returnNum = x => {
+            return new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve(x);
+              }, 500*(5-x));
+            });
+          }
+          
+          example().then(() =>{
+            console.log('done');
+          })</code>
+        </pre>
+      </myPrism>
+      <div class="p show-ans" @click="showAns=!showAns;">
+        思考完看解答>>>>>>
+      </div>
+      <div class="text-center mt-20" v-show="showAns">
+        <img src="@/assets/images/tech/forEachAsync/4.jpg" style="width: 40%;">
       </div>
 
     </div>
@@ -182,6 +259,7 @@
 export default {
   data() {
     return {
+      showAns: false,
     }
   },
   mounted() {
@@ -216,7 +294,7 @@ export default {
     justify-content: center;
 
     .article {
-      width: 50%;
+      width: 70%;
 
       .title {
         font-size: $title-font-size;
@@ -238,6 +316,13 @@ export default {
           letter-spacing: 1px;
           font-weight: 300;
           margin-top: 20px;
+        }
+        .show-ans {
+          font-weight: 500;
+          cursor: pointer;
+          &:hover {
+            color: blue;
+          }
         }
       }
     }
