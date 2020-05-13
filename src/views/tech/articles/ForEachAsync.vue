@@ -19,7 +19,8 @@
       </div>
       <myPrism class="p">
         <pre class="line-numbers">
-          <code class="language-javascript">const basket = {
+          <code class="language-javascript">const basket = [
+            {
               name: 'apple',
               number: 1
             },

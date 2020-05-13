@@ -68,6 +68,7 @@ export default {
   data() {
     return {
       ramenId: 1,
+      ramenCount: 11,
     };
   },
   async mounted() {
@@ -75,7 +76,7 @@ export default {
       console.log(this.$refs.prev);
       this.$refs.prev.classList.add("disable");
     }
-    if (this.ramenId >= 8) {
+    if (this.ramenId >= this.ramenCount) {
       this.$refs.next.classList.add("disable");
     }
   },
@@ -88,7 +89,7 @@ export default {
     },
     toNextRamen() {
       console.log(this.ramenId);
-      if (this.ramenId < 8) {
+      if (this.ramenId < this.ramenCount) {
         this.ramenId++;
       }
     },
@@ -97,7 +98,7 @@ export default {
     ramenId: function() {
       if (this.ramenId <= 1) {
         this.$refs.prev.classList.add("disable");
-      } else if (this.ramenId >= 8) {
+      } else if (this.ramenId >= this.ramenCount) {
         this.$refs.next.classList.add("disable");
       } else {
         this.$refs.prev.classList.remove("disable");
