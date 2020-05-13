@@ -244,12 +244,14 @@
         </pre>
       </myPrism>
       <div class="p show-ans" @click="showAns=!showAns;">
-        思考完看解答>>>>>>
+        思考完後看解答>>>>>>
       </div>
       <div class="text-center mt-20" v-show="showAns">
         <img src="@/assets/images/tech/forEachAsync/4.jpg" style="width: 40%;">
       </div>
-
+      <div class="p">
+        希望解答有跟你心目中的一樣！那麼我們下次見！  
+      </div>
     </div>
   </div> 
 </div>
