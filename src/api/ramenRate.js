@@ -1,10 +1,10 @@
 import { request } from './base';
 
-export const getAllRamenRates = () => {
+export const getAllRamenRates = params => {
   return request({
     method: 'get',
     url: '/ramenRate/all',
-    params: {},
+    params,
   });
 }
 

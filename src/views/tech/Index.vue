@@ -108,27 +108,32 @@ export default {
     };
   },
   async created() {
-    const result = await getAllRamenRates();
-    for (let item of result) {
-      try {
+    try {
+      const params = {
+        orderBy: 'visitDate',
+        limit: 100,
+        offset: 0,
+      };
+      const result = await getAllRamenRates(params);
+      for (let item of result) {
         item.imgSrc1 = require('@/assets/images/food/' + item.imgSrc1);
         // item.imgSrc2 = require('@/assets/images/food/' + item.imgSrc2);
         // item.imgSrc3 = require('@/assets/images/food/' + item.imgSrc3);
         // item.imgSrc4 = require('@/assets/images/food/' + item.imgSrc4);
         // item.imgSrc5 = require('@/assets/images/food/' + item.imgSrc5);
         this.ramens.push(item);
-      } catch (err) {
-        console.log(err);
       }
+      // this.ramens = result.map(item => {
+      //   item.imgSrc1 = require('@/assets/images/' + item.imgSrc1);
+      //   item.imgSrc2 = require('@/assets/images/' + item.imgSrc2);
+      //   item.imgSrc3 = require('@/assets/images/' + item.imgSrc3);
+      //   item.imgSrc4 = require('@/assets/images/' + item.imgSrc4);
+      //   item.imgSrc5 = require('@/assets/images/' + item.imgSrc5);
+      //   return item;
+      // });
+    } catch (err) {
+      console.log(err);
     }
-    // this.ramens = result.map(item => {
-    //   item.imgSrc1 = require('@/assets/images/' + item.imgSrc1);
-    //   item.imgSrc2 = require('@/assets/images/' + item.imgSrc2);
-    //   item.imgSrc3 = require('@/assets/images/' + item.imgSrc3);
-    //   item.imgSrc4 = require('@/assets/images/' + item.imgSrc4);
-    //   item.imgSrc5 = require('@/assets/images/' + item.imgSrc5);
-    //   return item;
-    // });
   },
 };
 </script>
