@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       ramenId: 1,
-      ramenCount: 11,
+      ramenCount: 13,
     };
   },
   async mounted() {
