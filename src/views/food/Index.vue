@@ -74,10 +74,10 @@ export default {
   async mounted() {
     if (this.ramenId <= 1) {
       console.log(this.$refs.prev);
-      this.$refs.prev.classList.add("disable");
+      this.$refs.prev.classList.add('disable');
     }
     if (this.ramenId >= this.ramenCount) {
-      this.$refs.next.classList.add("disable");
+      this.$refs.next.classList.add('disable');
     }
   },
   methods: {
@@ -95,40 +95,40 @@ export default {
     },
   },
   watch: {
-    ramenId: function() {
+    ramenId() {
       if (this.ramenId <= 1) {
-        this.$refs.prev.classList.add("disable");
+        this.$refs.prev.classList.add('disable');
       } else if (this.ramenId >= this.ramenCount) {
-        this.$refs.next.classList.add("disable");
+        this.$refs.next.classList.add('disable');
       } else {
-        this.$refs.prev.classList.remove("disable");
-        this.$refs.next.classList.remove("disable");
+        this.$refs.prev.classList.remove('disable');
+        this.$refs.next.classList.remove('disable');
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-  .pagination {
+.pagination {
+  display: flex;
+  justify-content: space-between;
+}
+.to-prev-or-next {
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+}
+.disable {
+  font-weight: 300;
+  color: gray;
+  cursor: not-allowed;
+}
+@media (min-width: 1500px) {
+  .page {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    max-width: 1440px;
   }
-  .to-prev-or-next {
-    font-size: 20px;
-    cursor: pointer;
-    text-align: center;
-  }
-  .disable {
-    font-weight: 300;
-    color: gray;
-    cursor: not-allowed;
-  }
-  @media (min-width: 1500px) {
-    .page {
-      display: flex;
-      justify-content: center;
-      max-width: 1440px;
-    }
-  }
+}
 </style>
