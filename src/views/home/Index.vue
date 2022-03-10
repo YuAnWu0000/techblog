@@ -6,12 +6,13 @@
         <div>這個Blog被創立的大部分原因是我那不堪的記憶力...</div>
         <div>剩下的其他原因我忘了:(</div>
       </div>
-      <div class="home-carousel-title">分類：
-        <span style="color: #9A7237;">{{carouselTitle}}</span>
+      <div class="home-carousel-title">
+        分類：
+        <span style="color: #9A7237;">{{ carouselTitle }}</span>
       </div>
       <el-carousel indicator-position="outside" type="card" height="500px" @change="handleCarousel">
         <el-carousel-item v-for="item in carousel" :key="item.name">
-          <img :src="item.src" @click="$router.push(item.href)" style="width: 768px;">
+          <img :src="item.src" @click="$router.push(item.href)" style="width: 768px;" />
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -26,20 +27,17 @@ export default {
     return {
       carousel: [
         {
-          // eslint-disable-next-line
-          src: require('@/assets/images/home/hacker.png'),
+          src: `${process.env.VUE_APP_CDN_PATH}/home/hacker.png`,
           href: 'tech/forEachAsync',
           title: '技術分享',
         },
         {
-          // eslint-disable-next-line
-          src: require('@/assets/images/home/food.png'),
+          src: `${process.env.VUE_APP_CDN_PATH}/home/food.png`,
           href: 'food',
           title: '美食食記',
         },
         {
-          // eslint-disable-next-line
-          src: require('@/assets/images/home/life.png'),
+          src: `${process.env.VUE_APP_CDN_PATH}/home/life.png`,
           href: 'life',
           title: '生活雜記',
         },
@@ -56,29 +54,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .home {
-    text-align: center;
-  }
-  .home-content {
-    background-color: rgba(216, 232, 231, 0.1);
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 30px;
-    padding-bottom: 10px;
-  }
-  .home-title {
-    font-size: 40px;
-    font-weight: 500;
-    margin-bottom: 10px;
-  }
-  .home-desciption {
-    font-size: 20px;
-    color: rgba(0, 0, 0, 0.4);
-    margin-bottom: 70px;
-  }
-  .home-carousel-title {
-    font-size: 30px;
-    font-weight: 500;
-    margin-bottom: 5px;
-  }
+.home {
+  text-align: center;
+}
+.home-content {
+  background-color: rgba(216, 232, 231, 0.1);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+.home-title {
+  font-size: 40px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.home-desciption {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 70px;
+}
+.home-carousel-title {
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
 </style>

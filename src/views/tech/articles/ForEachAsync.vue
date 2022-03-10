@@ -6,7 +6,7 @@
           Async/Await與forEach的愛恨情仇
         </div>
         <div class="mt-20">
-          <img src="@/assets/images/tech/forEachAsync/title.jpg" style="width: 50%;" />
+          <img :src="`${cdn}/tech/forEachAsync/title.jpg`" style="width: 50%;" />
         </div>
       </div>
       <div class="content">
@@ -68,13 +68,13 @@
           「到底為什麼console出來是下面這樣啊！」他一臉懊惱的抱著頭嘶吼
         </div>
         <div class="text-center mt-20">
-          <img src="@/assets/images/tech/forEachAsync/1.jpg" style="width: 50%;" />
+          <img :src="`${cdn}/tech/forEachAsync/1.jpg`" style="width: 50%;" />
         </div>
         <div class="p">
           「而且...點了一下箭頭...」
         </div>
         <div class="flex mt-20" style="padding-left: 10%; padding-right: 10%">
-          <img src="@/assets/images/tech/forEachAsync/2.jpg" style="width: 35%;" />
+          <img :src="`${cdn}/tech/forEachAsync/2.jpg`" style="width: 35%;" />
           <div class="p">
             「你看！我要的值又長出來啦！是怎樣，為什麼這世界這麼複雜啊啊啊？」
             見他開始抱著頭歇斯底里，同樣也深感困惑的我開始在網路上找尋相關資料，
@@ -222,7 +222,7 @@
           只要把forEach改為for就會是你預想的結果了！
         </div>
         <div class="text-center mt-20">
-          <img src="@/assets/images/tech/forEachAsync/3.jpg" style="width: 60%;" />
+          <img :src="`${cdn}/tech/forEachAsync/3.jpg`" style="width: 60%;" />
         </div>
         <div class="p-title">
           這真是神奇阿傑克！！
@@ -266,7 +266,7 @@
           思考完後看解答>>>>>>
         </div>
         <div class="text-center mt-20" v-show="showAns">
-          <img src="@/assets/images/tech/forEachAsync/4.jpg" style="width: 40%;" />
+          <img :src="`${cdn}/tech/forEachAsync/4.jpg`" style="width: 40%;" />
         </div>
         <div class="p">
           希望解答有跟你心目中的一樣！那麼我們下次見！
@@ -280,10 +280,13 @@
 export default {
   data() {
     return {
+      cdn: process.env.VUE_APP_CDN_PATH,
       showAns: false,
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(this.cdn);
+  },
 };
 </script>
 <style lang="scss" scoped>
