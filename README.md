@@ -82,3 +82,10 @@ Reason: 子組件上的事件預設需要註冊在子組件的methods中。
 Solution: 1.使用@click.native。 2.在子組件的methods中新增一個emit方法以觸發父組件的@click事件。
 ```
 References: [https://segmentfault.com/q/1010000011186651/a-1020000011187890](https://segmentfault.com/q/1010000011186651/a-1020000011187890)
+
+### Issue#7: code: 'ERR_OSSL_EVP_UNSUPPORTED'。
+```
+Reason: openssl與nodejs最新版本不相容。
+Solution: 加入NODE_OPTIONS=--openssl-legacy-provider(可用cross-env套件: cross-env NODE_OPTIONS=--openssl-legacy-provider)
+```
+References: [https://stackoverflow.com/questions/69394632/webpack-build-failing-with-err-ossl-evp-unsupported](https://stackoverflow.com/questions/69394632/webpack-build-failing-with-err-ossl-evp-unsupported)
