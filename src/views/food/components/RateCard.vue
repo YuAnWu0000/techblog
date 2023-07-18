@@ -167,16 +167,12 @@ export default {
   methods: {
     async setRamenRateAndImg() {
       this.ramen = await getRamenRateById(this.ramenId);
-      if (this.ramen.imgSrc1)
-        this.ramenImgs.push(`${process.env.VUE_APP_CDN_PATH}/food/${this.ramen.imgSrc1}`);
-      if (this.ramen.imgSrc2)
-        this.ramenImgs.push(`${process.env.VUE_APP_CDN_PATH}/food/${this.ramen.imgSrc2}`);
-      if (this.ramen.imgSrc3)
-        this.ramenImgs.push(`${process.env.VUE_APP_CDN_PATH}/food/${this.ramen.imgSrc3}`);
-      if (this.ramen.imgSrc4)
-        this.ramenImgs.push(`${process.env.VUE_APP_CDN_PATH}/food/${this.ramen.imgSrc4}`);
-      if (this.ramen.imgSrc5)
-        this.ramenImgs.push(`${process.env.VUE_APP_CDN_PATH}/food/${this.ramen.imgSrc5}`);
+      for(let i=1; i<=5; i++) {
+        let tmpSrc = this.ramen[`imgSrc${i}`];
+        console.log(tmpSrc);
+        if (tmpSrc)
+          this.ramenImgs.push(`${process.env.VUE_APP_CDN_PATH}/food/${tmpSrc}`);
+      }
     },
   },
   watch: {
