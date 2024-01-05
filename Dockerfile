@@ -8,13 +8,17 @@ RUN npm install
 
 COPY techblog/ .
 
-RUN npm run build
+EXPOSE 8080
 
-# Stage 2: Run Nginx
-FROM nginx:1.24
+CMD ["npm", "run", "dev"]
 
-COPY --from=blog_frontend /usr/techblog/dist /usr/share/nginx/html
+# RUN npm run build
 
-EXPOSE 80
+# # Stage 2: Run Nginx
+# FROM nginx:1.24
 
-CMD ["nginx", "-g", "daemon off;"]
+# COPY --from=blog_frontend /usr/techblog/dist /usr/share/nginx/html
+
+# EXPOSE 80
+
+# CMD ["nginx", "-g", "daemon off;"]
