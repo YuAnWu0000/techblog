@@ -3,10 +3,10 @@ FROM node:18 as blog_frontend
 
 WORKDIR /usr/techblog
 
-COPY techblog/package*.json ./
+COPY package*.json ./
 RUN npm install
 
-COPY techblog/ .
+COPY ./ .
 
 EXPOSE 8080
 
