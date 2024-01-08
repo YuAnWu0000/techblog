@@ -4,6 +4,7 @@ import Home from './views/home/Index.vue';
 import Food from './views/food/Index.vue';
 import Tech from './views/tech/Index.vue';
 import ForEachAsync from './views/tech/articles/ForEachAsync.vue';
+import VarLetConst from './views/tech/articles/varletconst.vue';
 
 Vue.use(Router);
 
@@ -36,6 +37,11 @@ export default new Router({
       path: '/tech/forEachAsync',
       name: 'forEachAsync',
       component: ForEachAsync,
+    },
+    {
+      path: '/tech/varletconst',
+      name: 'varLetConst',
+      component: VarLetConst,
     },
     // {
     //   path: '/about',
